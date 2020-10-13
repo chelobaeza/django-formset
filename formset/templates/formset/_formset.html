@@ -1,4 +1,5 @@
-{% load formset%}
+{% load i18n formset%}
+{% translate "Add line" as title %}
 
 {{ formset.management_form }}
 {% for form in formset %}
@@ -18,12 +19,12 @@
                 <div class="input-group-append">
                     <button 
                         class="btn btn-sm default add-form-row"
-                        title="Agregar linea" aria-hidden="true" data-toggle="tooltip" 
+                        title="{{ title }}"
                         name="add-row"
                     >
                         <span 
                             class="addlink text-primary" 
-                            aria-hidden="true" data-toggle='tooltip'
+                            title="{{ title }}"
                         ></span>
                     </button>
                 </div>

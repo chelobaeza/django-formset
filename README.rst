@@ -54,7 +54,7 @@ Donde formset_object es la variable formset en el contexto::
     
 
 Archivos estaticos
-------------------
+++++++++++++++++++
 
 Al utilizar el templatetag renderiza un template el cual carga automaticamente
 los archivos estáticos necesarios.
@@ -62,3 +62,38 @@ En caso que se utilicen mas de un formset, se puede prevenir la carga de los
 estaticos en cada formset::
 
     {% formset formset_object static=False %}
+
+
+Formset en Tabla
+++++++++++++++++
+
+Para que se dibuje en una tabla se necesita crearla y dentro el tag.
+El tag se encarga desde los "<tr>" en delante, pero es obligatorio
+setear el **ID** de la tabla ya que se pueden utilizar varios formsets
+en un template, es la unica manera de identificarlos de forma unica::
+
+    <table id="id_obligatorio">
+        <tr>
+            <th>Titulos</th>
+            <th>Titulos</th>
+        </tr>
+        {% formset formset%}
+    </table>
+    
+En caso que se quiera el mismo comportamiento pero sin dibujar la tabla
+de forma manual, podemos decirle al *Tag* que lo haga::
+
+    {% formset formset auto_table=True table_id='questions'%}
+
+Para el caso donde se usa la propiedad `auto_table=True` es obligatoria
+la propiedad `table_id` para identificar la tabla.
+
+..note::
+    
+    La fila de titulos se renderiza automaticamente utilizando los campos
+    visibles del formset. Incluso los `help_text` se muestran en este lugar.
+
+
+ 
+    
+    

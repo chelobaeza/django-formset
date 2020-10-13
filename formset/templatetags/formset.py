@@ -1,4 +1,5 @@
 from django import template
+from django.core.exceptions import ImproperlyConfigured
 
 
 register = template.Library()
@@ -12,6 +13,8 @@ def formset(*args, **kwargs):
     if args:
         kwargs['formset'] = args[0]
     base.update(kwargs)
+    if 'auto_table' in base and 'table_id' not in base:
+        raise ImproperlyConfigured('formset tag must receive "table_id" kwarg')
     return base
 
 

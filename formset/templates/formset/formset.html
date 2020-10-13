@@ -1,4 +1,4 @@
-{% load static formset%}
+{% load static formset i18n %}
 
 
 {% if static %}
@@ -7,7 +7,7 @@
 {% if formset.forms %}
 
     {% if auto_table %}
-        <table class="">
+        <table class="{{ table_class }}" id="{{ table_id }}">
 	        <tr>
 	            {% for field in formset.0|exclude_delete_field %}
 	                {% if not field.is_hidden %}
@@ -21,7 +21,7 @@
 	                {% endif %}
 	            {% endfor %}
 	            <th>
-	                Acciones
+	                {% translate "Actions" %}
 	            </th>
 	        </tr>
 	       {% include "formset/_formset.html" %}
