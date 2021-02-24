@@ -1,38 +1,33 @@
-{% load static formset %}
+{% load static formset i18n %}
 
 
 {% if static %}
     <script type="text/javascript" src="{% static 'formset/js/formset.js' %}"></script>
 {% endif %}
+{% if formset.forms %}
 
-{{ formset.management_form }}
-{% for form in formset %}
-    <tr class="formsetRow">
-        {{ form.id }}
-        {% for field in form|exclude_delete_field %}
-            {% if field.is_hidden %}
-                {{ field }}
-            {% else %}
-                <td>{{ field }} {{ field.errors }}</td>
-            {% endif %}
-        {% endfor %}
-        <td>
-            {% if form.DELETE %}
-               {{ form.DELETE.label }}: {{ form.DELETE }}
-            {% else %}
-                <div class="input-group-append">
-                    <button 
-                        class="btn btn-sm default add-form-row"
-                        title="Agregar linea" aria-hidden="true" data-toggle="tooltip" 
-                        name="add-row"
-                    >
-                        <span 
-                            class="addlink text-primary" 
-                            aria-hidden="true" data-toggle='tooltip'
-                        ></span>
-                    </button>
-                </div>
-           {% endif %}
-        </td>
-    </tr>
-{% endfor %}
+    {% if auto_table %}
+        <table class="{{ table_class }}" id="{{ table_id }}">
+	        <tr>
+	            {% for field in formset.0|exclude_delete_field %}
+	                {% if not field.is_hidden %}
+	                    <th>
+	                        {{ field.label }}
+	                        {% if field.help_text %}
+	                            <img class="help help-tooltip" src="{% static 'admin/img/icon-unknown.svg' %}" title="{{ field.help_text }}">
+	                        {% endif %}
+	                        
+	                    </th>
+	                {% endif %}
+	            {% endfor %}
+	            <th>
+	                {% translate "Actions" %}
+	            </th>
+	        </tr>
+	       {% include "formset/_formset.html" %}
+	    </table>
+    {% else %}
+        {% include "formset/_formset.html" %}
+    {% endif %}
+	
+{% endif %}

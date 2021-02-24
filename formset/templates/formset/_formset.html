@@ -1,0 +1,34 @@
+{% load i18n formset%}
+{% translate "Add line" as title %}
+
+{{ formset.management_form }}
+{% for form in formset %}
+    <tr class="formsetRow">
+        {{ form.id }}
+        {% for field in form|exclude_delete_field %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% else %}
+                <td>{{ field }} {{ field.errors }}</td>
+            {% endif %}
+        {% endfor %}
+        <td>
+            {% if form.id.value and form.DELETE %}
+               {{ form.DELETE.label }}: {{ form.DELETE }}
+            {% else %}
+                <div class="input-group-append">
+                    <button 
+                        class="btn btn-sm default add-form-row"
+                        title="{{ title }}"
+                        name="add-row"
+                    >
+                        <span 
+                            class="addlink text-primary" 
+                            title="{{ title }}"
+                        ></span>
+                    </button>
+                </div>
+           {% endif %}
+        </td>
+    </tr>
+{% endfor %}
