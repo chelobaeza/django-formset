@@ -4,6 +4,8 @@ from django.core.exceptions import ImproperlyConfigured
 class FormsetMixin:
     formset_class = None
 
+    objects = None
+
     def get_context_data(self, **kwargs):
         if 'formset' not in kwargs:
             kwargs['formset'] = self.get_formset()
@@ -15,7 +17,6 @@ class FormsetMixin:
             *args,
             **kwargs,
             **self.get_formset_kwargs(),
-            instance=self.object
         )
         return formset
 
@@ -27,6 +28,7 @@ class FormsetMixin:
         return self.formset_class
 
     def get_formset_kwargs(self):
+        """Here goes child object queryset if needed."""
         return {}
 
     def formset_invalid(self, formset):
@@ -43,3 +45,15 @@ class FormsetMixin:
             return response
         else:
             return self.formset_invalid(formset)
+
+
+class InlineFormsetMixin(FormsetMixin):
+    def get_formset_kwargs(self):
+        return {
+            'instance': self.object
+        }
+
+
+class ModelFormsetMixin(FormsetMixin):
+    def get_formset_kwargs(self):
+        return {}
