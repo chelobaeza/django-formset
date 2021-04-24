@@ -4,7 +4,6 @@
 {% if static %}
     <script type="text/javascript" src="{% static 'formset/js/formset.js' %}"></script>
 {% endif %}
-{% if formset.forms %}
 
     {% if auto_table %}
         <table class="{{ table_class }}" id="{{ table_id }}">
@@ -29,5 +28,3 @@
     {% else %}
         {% include "formset/_formset.html" %}
     {% endif %}
-	
-{% endif %}
