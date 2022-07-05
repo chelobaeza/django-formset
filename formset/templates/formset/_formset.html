@@ -9,7 +9,13 @@
             {% if field.is_hidden %}
                 {{ field }}
             {% else %}
-                <td>{{ field }} {{ field.errors }}</td>
+                <td>{{ field }} 
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% else %}
+                        {{ field.help_text }}
+                    {% endif %}
+                </td>
             {% endif %}
         {% endfor %}
         <td>
